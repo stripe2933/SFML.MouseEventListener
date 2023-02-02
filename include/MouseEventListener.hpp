@@ -18,6 +18,7 @@ public:
     std::function<void(MouseEventListener&, const sf::Event::MouseButtonEvent&)> on_mouse_button_released; /// Event callback for mouse button releasing.
     std::function<void(MouseEventListener&, const sf::Event::MouseMoveEvent&)> on_mouse_moved; /// Event callback for mouse moving (on target).
     std::function<void(MouseEventListener&, const sf::Event::MouseWheelScrollEvent&)> on_mouse_wheel_scrolled; /// Event callback for mouse wheel scrolling (on target).
+
     std::function<void(MouseEventListener&, int, int)> on_z_index_changed; /// Event callback executed for z-index change.
 
     MouseEventListener(sf::Transformable &target, std::shared_ptr<const ObjectBoundary> boundary, int z_index = 0);

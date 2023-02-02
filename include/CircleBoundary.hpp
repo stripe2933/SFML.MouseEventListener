@@ -12,7 +12,7 @@ public:
     sf::Vector2f center;
     float radius;
 
-    CircleBoundary(sf::Vector2f center, float radius);
+    constexpr CircleBoundary(sf::Vector2f center, float radius);
 
     bool contains(sf::Vector2f position) const override;
 };

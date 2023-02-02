@@ -12,7 +12,7 @@ class AARectangleBoundary : public ObjectBoundary {
 public:
     sf::FloatRect rect;
 
-    explicit AARectangleBoundary(const sf::FloatRect &rect);
+    explicit constexpr AARectangleBoundary(const sf::FloatRect &rect);
 
     bool contains(sf::Vector2f position) const override;
 };
