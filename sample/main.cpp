@@ -86,6 +86,7 @@ int main() {
                     break;
 
                 case sf::Event::MouseButtonReleased:
+                    system.executeMouseEvent<sf::Event::MouseButtonReleased>(event.mouseButton);
                     drag_observer.processMouseButtonReleasedEvent(event.mouseButton);
                     break;
 

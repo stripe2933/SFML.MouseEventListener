@@ -20,7 +20,7 @@ private:
     template <> struct event_arg<sf::Event::MouseButtonReleased> {
         using arg_type = sf::Event::MouseButtonEvent;
         constexpr static auto has_callback = [](const MouseEventListener &listener) { return static_cast<bool>(listener.on_mouse_button_released); };
-        constexpr static auto execute_callback = [](MouseEventListener &listener, const arg_type &event){ listener.on_mouse_button_pressed(listener, event); };
+        constexpr static auto execute_callback = [](MouseEventListener &listener, const arg_type &event){ listener.on_mouse_button_released(listener, event); };
     };
     template <> struct event_arg<sf::Event::MouseMoved> {
         using arg_type = sf::Event::MouseMoveEvent;
