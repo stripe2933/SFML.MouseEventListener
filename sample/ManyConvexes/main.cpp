@@ -4,7 +4,7 @@
 #include <DragObserver.hpp>
 
 int main() {
-    sf::RenderWindow window { sf::VideoMode {{ 480U, 480U }}, "MouseEventListener Example" };
+    sf::RenderWindow window { sf::VideoMode {{ 480U, 480U }}, "MouseEventListener Example - ManyConvexes" };
     window.setVerticalSyncEnabled(true);
 
     // Initialize random engine.
@@ -14,7 +14,7 @@ int main() {
     std::uniform_real_distribution<float> ratio_dis { 0.f, 1.f }, scale_dis { 0.5f, 2.f };
     std::uniform_int_distribution<unsigned char> color_dis { 0, 255 };
 
-    // Create rectangles, circles and convexes with same shape.
+    // Create convexes and varying their translation, scale, and rotation.
 
     constexpr std::size_t NUM_CONVEX = 50;
 
@@ -25,8 +25,6 @@ int main() {
     default_convex.setPoint(3, sf::Vector2f(10.f, 33.f));
     default_convex.setPoint(4, sf::Vector2f(0.f, 17.f));
     std::vector<sf::ConvexShape> convexes(NUM_CONVEX, default_convex);
-
-    // Varying shape's translation, scale, and rotation.
 
     std::for_each(convexes.begin(), convexes.end(), [&](auto &shape){
         shape.setPosition(sf::Vector2f { window.getSize() }.cwiseMul({ ratio_dis(gen), ratio_dis(gen) }));
