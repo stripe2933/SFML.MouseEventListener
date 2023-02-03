@@ -9,7 +9,8 @@ add_library(SFML_MouseEventListener
         lib/AARectangleBoundary.cpp include/AARectangleBoundary.hpp
         lib/MouseEventListener.cpp include/MouseEventListener.hpp
         lib/MouseEventSystem.cpp include/MouseEventSystem.hpp
-        lib/ConvexBoundary.cpp include/ConvexBoundary.hpp)
+        lib/ConvexBoundary.cpp include/ConvexBoundary.hpp
+        lib/GroupBoundary.cpp include/GroupBoundary.hpp)
 target_include_directories(SFML_MouseEventListener
         PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
