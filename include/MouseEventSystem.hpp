@@ -10,6 +10,10 @@
 
 class MouseEventSystem{
 private:
+    //////////////////////////////////////////////////
+    /// Type definitions.
+    //////////////////////////////////////////////////
+
     // Specify event parameter type and event callback for corresponding sf::Event::EventType.
     template <sf::Event::EventType T> struct event_arg { };
     template <> struct event_arg<sf::Event::MouseButtonPressed> {
@@ -34,12 +38,63 @@ private:
     };
 
 public:
-    explicit MouseEventSystem(const std::function<sf::Vector2f(sf::Vector2i)> &coordination_converter);
+    //////////////////////////////////////////////////
+    /// Constructors and destructor.
+    //////////////////////////////////////////////////
 
+    ~MouseEventSystem() noexcept = default;
+    explicit MouseEventSystem(const std::function<sf::Vector2f(sf::Vector2i)> &coordination_converter);
+    MouseEventSystem(const MouseEventSystem&) = delete;
+    MouseEventSystem(MouseEventSystem&&) = default;
+
+    //////////////////////////////////////////////////
+    /// Member functions.
+    //////////////////////////////////////////////////
+
+    /**
+     * Add listener to listeners.
+     * @param listener An unique_ptr object of MouseEventListener.
+     */
     void addListener(std::unique_ptr<MouseEventListener> listener);
+
+    /**
+     * Delete listener in the index.
+     * @param index Listener index in listeners.
+     * @note Index of listeners may changed due to it's z-index changing.
+     */
     void deleteListener(std::size_t index);
+
     const std::list<std::unique_ptr<MouseEventListener>> &getListeners() const;
 
+    /**
+     * Execute callback of the MouseEventListener corresponding to the given input.
+     * @tparam T SFML mouse event type (MouseButtonPressed/MouseButtonReleased/MouseMoved/MouseWheelScrolled).
+     * @param event Event object corresponds to given SFML mouse event type (\p T).
+     *
+     * @example
+     * @code
+     * // `system` is MouseEventSystem and suppose listeners are already registered.
+     *
+     * // In sf::RenderWindow main loop:
+     * for (sf::Event event { }; window.pollEvent(event);) {
+     *     switch (event.type) {
+     *         // Use executeMouseEvent for the necessary event input.
+     *         // In here, we want to get mouse input for only mouse pressing and moving.
+     *
+     *         case sf::Event::MouseButtonPressed:
+     *             system.executeMouseEvent<sf::Event::MouseButtonPressed>(event.mouseButton);
+     *             break;
+     *         case sf::Event::MouseMoved:
+     *             system.executeMouseEvent<sf::Event::MouseMoved>(event.mouseMove);
+     *             break;
+     *
+     *         // ... other cases for sf::Event::EventType.
+     *     }
+     * }
+     *
+     * // Now when clicking or moving cursor in the listener's boundary, their on_mouse_button_pressed/on_mouse_moved callback will be executed.
+     * @endcode
+     */
     template <sf::Event::EventType T>
     void executeMouseEvent(const typename event_arg<T>::arg_type &event) const{
         auto result = getFirstHitTestListener<T>({ event.x, event.y });
@@ -50,8 +105,17 @@ public:
     }
 
 private:
-    std::function<sf::Vector2f(sf::Vector2i)> coordination_converter; /// A converter for converting given window-coordinate Vector2i to target-coordinate Vector2f.
+    //////////////////////////////////////////////////
+    /// Private member fields.
+    //////////////////////////////////////////////////
+
+    std::function<sf::Vector2f(sf::Vector2i)> coordination_converter; /// A converter for converting given window-
+                                                                      /// coordinate Vector2i to target-coordinate Vector2f.
     std::list<std::unique_ptr<MouseEventListener>> listeners; /// Registered listeners. Sorted in ascending order of z-index.
+
+    //////////////////////////////////////////////////
+    /// Private member functions.
+    //////////////////////////////////////////////////
 
     /**
      * Calculate the object with the highest \p z_index that has a callback corresponding to a given \p MouseEventType

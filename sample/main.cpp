@@ -36,7 +36,7 @@ int main() {
     MouseEventSystem system { [&](sf::Vector2i position) { return window.mapPixelToCoords(position); } };
     std::optional<sf::Transformable*> panning_target = std::nullopt;
     for (auto &rect : rects){
-        auto listener = MouseEventListener::createListenerFrom(rect);
+        auto listener = std::make_unique<MouseEventListener>(rect, ObjectBoundary::createBoundaryFrom(rect));
         listener->on_mouse_button_pressed = [&](auto &sender, const auto &event){
             if (event.button == sf::Mouse::Left){
                 panning_target = &sender.target;

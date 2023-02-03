@@ -4,7 +4,6 @@ project(SFML_MouseEventListener)
 set(CMAKE_CXX_STANDARD 20)
 
 add_library(SFML_MouseEventListener
-        lib/Affine2DProperties.cpp include/Affine2DProperties.hpp
         lib/ObjectBoundary.cpp include/ObjectBoundary.hpp
         lib/CircleBoundary.cpp include/CircleBoundary.hpp
         lib/AARectangleBoundary.cpp include/AARectangleBoundary.hpp
