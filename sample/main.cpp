@@ -14,19 +14,25 @@ int main() {
     std::uniform_real_distribution<float> ratio_dis { 0.f, 1.f }, scale_dis { 0.5f, 2.f };
     std::uniform_int_distribution<unsigned char> color_dis { 0, 255 };
 
-    // Create 50 rectangle objects with varying position, rotation and scale.
+    // Create rectangles, circles and convexes with same shape.
 
-    constexpr std::size_t NUM_OBJECTS = 50;
-    std::vector<sf::RectangleShape> rects;
-    rects.reserve(NUM_OBJECTS);
-    std::generate_n(std::back_inserter(rects), NUM_OBJECTS, [&]{
-        sf::RectangleShape rect { { 50.f, 50.f } };
-        rect.setPosition(sf::Vector2f { window.getSize() }.cwiseMul({ ratio_dis(gen), ratio_dis(gen) }));
-        rect.setRotation(sf::degrees(360.f * ratio_dis(gen)));
-        rect.setFillColor(sf::Color { color_dis(gen), color_dis(gen), color_dis(gen) });
-        rect.setScale({ scale_dis(gen), scale_dis(gen) });
+    constexpr std::size_t NUM_CONVEX = 50;
 
-        return rect;
+    sf::ConvexShape default_convex { 5 };
+    default_convex.setPoint(0, sf::Vector2f(0.f, 0.f));
+    default_convex.setPoint(1, sf::Vector2f(50.f, 3.f));
+    default_convex.setPoint(2, sf::Vector2f(40.f, 30.f));
+    default_convex.setPoint(3, sf::Vector2f(10.f, 33.f));
+    default_convex.setPoint(4, sf::Vector2f(0.f, 17.f));
+    std::vector<sf::ConvexShape> convexes(NUM_CONVEX, default_convex);
+
+    // Varying shape's translation, scale, and rotation.
+
+    std::for_each(convexes.begin(), convexes.end(), [&](auto &shape){
+        shape.setPosition(sf::Vector2f { window.getSize() }.cwiseMul({ ratio_dis(gen), ratio_dis(gen) }));
+        shape.setRotation(sf::degrees(360.f * ratio_dis(gen)));
+        shape.setFillColor(sf::Color { color_dis(gen), color_dis(gen), color_dis(gen) });
+        shape.setScale({ scale_dis(gen), scale_dis(gen) });
     });
 
     // Create MouseEventListener from each rectangle and set behavior for mouse event.
@@ -35,8 +41,8 @@ int main() {
 
     MouseEventSystem system { [&](sf::Vector2i position) { return window.mapPixelToCoords(position); } };
     std::optional<sf::Transformable*> panning_target = std::nullopt;
-    for (auto &rect : rects){
-        auto listener = std::make_unique<MouseEventListener>(rect, ObjectBoundary::createBoundaryFrom(rect));
+    for (auto &shape : convexes){
+        auto listener = std::make_unique<MouseEventListener>(shape, ObjectBoundary::createBoundaryFrom(shape));
         listener->on_mouse_button_pressed = [&](auto &sender, const auto &event){
             if (event.button == sf::Mouse::Left){
                 panning_target = &sender.target;

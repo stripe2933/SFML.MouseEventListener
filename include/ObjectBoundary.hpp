@@ -8,6 +8,7 @@
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/Graphics/ConvexShape.hpp>
 
 class ObjectBoundary {
 public:
@@ -17,6 +18,7 @@ public:
 
     static std::shared_ptr<ObjectBoundary> createBoundaryFrom(const sf::CircleShape &circle);
     static std::shared_ptr<ObjectBoundary> createBoundaryFrom(const sf::RectangleShape &rect);
+    static std::shared_ptr<ObjectBoundary> createBoundaryFrom(const sf::ConvexShape &convex_polygon);
 };
 
 #endif //SFML_MOUSEEVENTLISTENER_OBJECTBOUNDARY_HPP
