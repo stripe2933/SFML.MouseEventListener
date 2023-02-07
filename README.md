@@ -90,5 +90,5 @@ for (auto &listener : system.getListeners()){
 ```
 
 You can find more sample from [ManyConvexes](https://github.com/stripe2933/SFML.MouseEventListener/tree/master/sample/ManyConvexes) 
-(make objects pannable using `MouseEventListener`) and (Shapes)[https://github.com/stripe2933/SFML.MouseEventListener/tree/master/sample/Shapes]
+(make objects pannable using `MouseEventListener`) and [Shapes](https://github.com/stripe2933/SFML.MouseEventListener/tree/master/sample/Shapes)
 (create an `ObjectBoundary` by combining multiple `ObjectBoundary`s to make non-regular shaped target be able to listen.)
