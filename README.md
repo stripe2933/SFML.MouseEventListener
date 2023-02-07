@@ -1,10 +1,26 @@
 # SFML.MouseEventListener
-Make SFML shapes listen mouse event when cursor is in their boundary.
+Make SFML 3 shapes listen mouse event when cursor is in their boundary.
 
 ## A working example
 [Sample: [ManyConvexes](https://github.com/stripe2933/SFML.MouseEventListener/tree/master/sample/ManyConvexes)]
 
 https://user-images.githubusercontent.com/63503910/217190870-27e32287-4cc1-40ce-8534-7cea4fca8125.mov
+
+## How to add this library to my project?
+
+This library is based on CMake. You can use `FetchContent` CMake script to add the library.
+
+```cmake
+include(FetchContent)
+FetchContent_Declare(SFML_MouseEventListener
+        GIT_REPOSITORY https://github.com/stripe2933/SFML.MouseEventListener.git)
+FetchContent_MakeAvailable(SFML_MouseEventListener)
+
+target_link_libraries(${PROJECT_NAME} PUBLIC SFML_MouseEventListener)
+```
+
+Because the library has direct dependency from SFML, SFML would be automatically included to your project via find_package(SFML).
+You can set `SFML_DIR` CMake variable manually if the CMake system cannot find SFML.
 
 ## How should I use it?
 
