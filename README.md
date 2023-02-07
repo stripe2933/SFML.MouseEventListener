@@ -49,7 +49,7 @@ MouseEventSystem system { [&](sf::Vector2i position) { return window.mapPixelToC
 // and unique_ptr of MouseEventListener.
 // The constructor of MouseEventListener has optional argument, z_index, which indicates the hit-test priority (higher 
 // z-index means the object is in front of other objects), sets by 0. You can manually set it as what you want.
-auto listener = std::make_unique<MouseEventListener>(shape, ObjectBoundary::createBoundaryFrom(shape));
+auto listener = std::make_unique<MouseEventListener>(circle, ObjectBoundary::createBoundaryFrom(circle));
 
 // And register callback for sf::MouseButtonPressed. It will be executed when press mouse button.
 listener->on_mouse_button_pressed = [&](auto &sender, const auto &event){
@@ -57,6 +57,9 @@ listener->on_mouse_button_pressed = [&](auto &sender, const auto &event){
     // event: sf::Event::MouseButtonEvent, which has button and cursor position.
     
     std::cout << "Mouse pressed on " << static_cast<void*>(&sender) << " at (" << event.x << ", " << event.y << ")\n";
+    
+// Register listener to system.
+system.addListener(std::move(listener));
 };
 ```
 
