@@ -4,8 +4,6 @@
 #include <CircleBoundary.hpp>
 #include <GroupBoundary.hpp>
 
-static const std::filesystem::path ASSET_DIRNAME = "/Users/stripe2933/Desktop/SFML.MouseEventListener/sample/Shapes/assets";
-
 int main() {
     sf::RenderWindow window { sf::VideoMode {{ 480U, 480U }}, "MouseEventListener Example - Shapes" };
     window.setVerticalSyncEnabled(true);
@@ -45,9 +43,9 @@ int main() {
     // You can use GroupBoundary(which hit test for multiple boundaries) for non-regular shape object.
 
     sf::Texture bird_tex, up_wing_tex, down_wing_tex;
-    if (!bird_tex.loadFromFile(ASSET_DIRNAME / "birdbody.png") ||
-        !up_wing_tex.loadFromFile(ASSET_DIRNAME / "birdwingdown.png") ||
-        !down_wing_tex.loadFromFile(ASSET_DIRNAME / "birdwingup.png")) {
+    if (!bird_tex.loadFromFile("assets/birdbody.png") ||
+        !up_wing_tex.loadFromFile("assets/birdwingdown.png") ||
+        !down_wing_tex.loadFromFile("assets/birdwingup.png")) {
         throw std::runtime_error { "Cannot load required texture." };
     }
     bird_tex.setSmooth(true);
