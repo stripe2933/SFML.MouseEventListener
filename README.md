@@ -57,10 +57,10 @@ listener->on_mouse_button_pressed = [&](auto &sender, const auto &event){
     // event: sf::Event::MouseButtonEvent, which has button and cursor position.
     
     std::cout << "Mouse pressed on " << static_cast<void*>(&sender) << " at (" << event.x << ", " << event.y << ")\n";
+};
     
 // Register listener to system.
 system.addListener(std::move(listener));
-};
 ```
 
 3. Make `MouseEventSystem` listens `sf::Event` polled by window. Since only callback for mouse pressing is registered,
